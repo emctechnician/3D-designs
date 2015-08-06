@@ -1,32 +1,35 @@
-BW  =   15;         //Bearing width Z axis
+BW  =   10;         //Bearing width Z axis
 EW  =   0.3;        //extrusion width
 LH  =   0.2;        //layer height
-ID  =   8.5;          //inner diameter
-OD  =   51;         //outer diameter
+ID  =   8.1;          //inner diameter
+OD  =   31;         //outer diameter
+//OD - ID must not be less than 20.4
+if ((OD - ID) < 20.4){
+    echo("OD - ID is less than 20.4");
+}
 
 WW  =   round(1 / EW) * EW + EW;     //Wall width XY axis
-WT  =   round(1 / LH) * LH + LH;      //wall width Z axis
+WT  =   round(1 / LH) * LH + LH;     //wall width Z axis
 
 OR  =   OD / 2;             //Outer radius
 IR  =   ID / 2;             //Inner radius
 SR  =   (OD + ID) / 4;      //Split radius
 
-RR  =   EW * 12;//Roller radius, must be larger than EW * 10
-NR  =   12;      //Number of rollers, could auto generate this?
+NR  =   7;                     //Number of rollers, could auto generate this?
+RR  =   EW * 12;                //Roller radius, must be larger than EW * 10
 RH  =   BW - WT * 2 - LH * 4;   //Roller height
-RPR =   OR - WW - RR - EW;  //Roller position radius
-
+RPR =   OR - WW - RR - EW;      //Roller position radius
 
 
 module side_wall(z){
     translate([0,0,z])
     difference(){
-        cylinder(WT, OR, OR);   //main sidewall
+        cylinder(WT, OR, OR, $fn = 50);   //main sidewall
         difference(){           //Split ring
             cylinder(WT, RPR + WW/2, RPR + WW/2); 
             cylinder(WT, RPR - WW/2, RPR - WW/2);
         }
-        cylinder(WT, IR, IR);
+        cylinder(WT, IR, IR, $fn = 30);
     }
 }
 
