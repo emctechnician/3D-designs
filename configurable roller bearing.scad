@@ -24,7 +24,7 @@ RPR =   OR - WW - RR - EW;      //Roller position radius
 module side_wall(z){
     translate([0,0,z])
     difference(){
-        cylinder(WT, OR, OR, $fn = 50);   //main sidewall
+        cylinder(WT, OR, OR, $fn = 60);   //main sidewall
         difference(){           //Split ring
             cylinder(WT, RPR + WW/2, RPR + WW/2); 
             cylinder(WT, RPR - WW/2, RPR - WW/2);
