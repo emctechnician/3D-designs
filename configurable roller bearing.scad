@@ -54,7 +54,7 @@ module rollers(){
         translate([RPR, 0, WT + LH * 2])//offset roller
         difference(){
             cylinder(RH, RR, RR, , $fn = 30);
-            translate([0,0,RH / 2 - WT + LH * 2])
+            translate([0,0,RH / 2 - WT + LH])
             difference(){       //cage cutout on roller
                 cylinder(WT + LH * 4, RR, RR, $fn = 30);
                 cylinder(WT + LH * 4, EW * 4, EW * 4, $fn = 14);
@@ -65,7 +65,7 @@ module rollers(){
 }
 
 module cage(){
-    translate([0,0,WT + RH / 2])
+    translate([0,0,WT + RH / 2 + LH])
     difference(){
         cylinder(WT, RPR + EW * 7, RPR + EW * 7);
         cylinder(WT, RPR - EW * 7, RPR - EW * 7);
