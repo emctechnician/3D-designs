@@ -10,7 +10,7 @@ however results may vary.
 */
 
 //start of modifiable variables
-support =   0;          //Generate soluble support 1 = yes, 0 = no  
+support =   1;          //Generate soluble support 1 = yes, 0 = no  
 BW      =   10;         //Bearing width Z axis
 EW      =   0.3;        //extrusion width
 LH      =   0.2;        //layer height
@@ -51,12 +51,12 @@ module side_wall(z){
 
 module side_wall_support(){
     difference(){
-        cylinder(BW, OR, OR, $fn = 60);   //main sidewall
+        cylinder(BW - WT, OR, OR, $fn = 60);   //main sidewall
         difference(){           //Split ring
-            cylinder(BW, RPR + RR - WW, RPR + RR - WW); 
-            cylinder(BW, RPR - RR + WW, RPR - RR + WW);
+            cylinder(BW - WT, RPR + RR - WW, RPR + RR - WW); 
+            cylinder(BW - WT, RPR - RR + WW, RPR - RR + WW);
         }
-        cylinder(BW, IR, IR, $fn = 30);
+        cylinder(BW - WT, IR, IR, $fn = 30);
     }
 }
 
@@ -95,7 +95,13 @@ module roller_support(){
     for (i = [0:360 / NR:360]){
         rotate([0, 0, i])
         translate([RPR, 0, 0])//offset roller
-        cylinder(RH + WT + LH * 2, RR, RR, , $fn = 30);
+        cylinder(WT + LH * 2, RR, RR, , $fn = 30);
+        rotate([0, 0, i])
+        translate([RPR,0,RH / 2 + LH * 3])
+        difference(){       //cage cutout on roller
+            cylinder(WT + LH * 4, RR, RR, $fn = 30);
+            cylinder(WT + LH * 4, EW * 4, EW * 4, $fn = 14);
+        }
     }
         
 }
@@ -138,9 +144,19 @@ if (support == 0){
     roller();
     cage();
 } else {
-    side_wall_support();
-    roller_support();
-    cage_support();
+    difference(){
+        union(){
+            //side_wall_support();
+            roller_support();
+            cage_support();
+        }
+            side_wall(0);
+        side_wall(BW - WT);
+        outer_wall();
+        inner_wall();
+        roller();
+        cage();
+    }
 }
 
 /*
