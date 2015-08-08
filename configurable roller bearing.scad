@@ -65,7 +65,7 @@ module rollers(){
 }
 
 module cage(){
-    translate([0,0,WT + RH / 2 + LH])
+    translate([0,0,WT + RH / 2 - LH])
     difference(){
         cylinder(WT, RPR + EW * 7, RPR + EW * 7);
         cylinder(WT, RPR - EW * 7, RPR - EW * 7);
@@ -82,8 +82,8 @@ module cage(){
 
 
 side_wall(0);
-side_wall(BW - WT);
-outer_wall();
+//8side_wall(BW - WT);
+//outer_wall();
 inner_wall();
 rollers();
 cage();
