@@ -21,6 +21,7 @@ NR      =   7;          //Number of rollers
 
 //end of modifiable variables
 
+{
 if ((OD - ID) < 20.4){
     echo("ERROR: OD - ID is less than 20.4");
 }
@@ -35,7 +36,7 @@ SR  =   (OD + ID) / 4;      //Split radius
 RR  =   EW * 12;                //Roller radius, must be larger than EW * 10
 RH  =   BW - WT * 2 - LH * 4;   //Roller height
 RPR =   OR - WW - RR - EW;      //Roller position radius
-
+}
 
 module side_wall(z){
     translate([0,0,z])
