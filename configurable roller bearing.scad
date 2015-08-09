@@ -147,11 +147,11 @@ if (support == 0){
 } else {
     difference(){
         union(){
-            //side_wall_support();
+            side_wall_support();
             roller_support();
             cage_support();
         }
-            side_wall(0);
+        side_wall(0);
         side_wall(BW - WT);
         outer_wall();
         inner_wall();
