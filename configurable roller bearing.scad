@@ -7,17 +7,14 @@ of bearing.
 The outer diameter minus the inner diameter must not be less
 than 20.4, this can be smaller if you drop the roller size, 
 however results may vary.
-
-Instruction to print:
-
 */
 
 //start of modifiable variables
-support =   0;          //Generate soluble support 1 = yes, 0 = no  
+support =   1;          //Generate soluble support 1 = yes, 0 = no  
 BW      =   10;         //Bearing width Z axis
 EW      =   0.3;        //extrusion width
 LH      =   0.2;        //layer height
-ID      =   8.6;        //inner diameter
+ID      =   8.1;        //inner diameter
 OD      =   31;         //outer diameter
 NR      =   7;          //Number of rollers
 
@@ -88,7 +85,7 @@ module roller(){
             translate([0,0,RH / 2 - WT + LH])
             difference(){       //cage cutout on roller
                 cylinder(WT + LH * 4, RR, RR, $fn = 30);
-                cylinder(WT + LH * 4, EW * 5, EW * 5, $fn = 14);
+                cylinder(WT + LH * 4, EW * 4, EW * 4, $fn = 14);
             }
         }
     }
@@ -104,7 +101,7 @@ module roller_support(){
         translate([RPR,0,RH / 2 + LH * 3])
         difference(){       //cage cutout on roller
             cylinder(WT + LH * 4, RR, RR, $fn = 30);
-            cylinder(WT + LH * 4, EW * 5, EW * 5, $fn = 14);
+            cylinder(WT + LH * 4, EW * 4, EW * 4, $fn = 14);
         }
     }
         
@@ -113,12 +110,12 @@ module roller_support(){
 module cage(){
     translate([0,0,WT + RH / 2 - LH])
     difference(){
-        cylinder(WT, RPR + EW * 8, RPR + EW * 8);
-        cylinder(WT, RPR - EW * 8, RPR - EW * 8);
+        cylinder(WT, RPR + EW * 7, RPR + EW * 7);
+        cylinder(WT, RPR - EW * 7, RPR - EW * 7);
         for (i = [0:360 / NR:360]){
             rotate([0, 0, i])
             translate([RPR, 0, 0])
-            cylinder(WT, EW * 6, EW * 6, $fn = 14);
+            cylinder(WT, EW * 5, EW * 5, $fn = 14);
         }
     }
     
@@ -127,12 +124,12 @@ module cage(){
 module cage_support(){
     translate([0,0,0])
     difference(){
-        cylinder(WT + RH / 2 - LH, RPR + RR - WW, RPR + RR - WW);
-        cylinder(WT + RH / 2 - LH, RPR + RR - WW, RPR + RR - WW);
+        cylinder(WT + RH / 2 - LH, RPR + EW * 7, RPR + EW * 7);
+        cylinder(WT + RH / 2 - LH, RPR - EW * 7, RPR - EW * 7);
         for (i = [0:360 / NR:360]){
             rotate([0, 0, i])
             translate([RPR, 0, 0])
-            cylinder(WT, EW * 6, EW * 6, $fn = 14);
+            cylinder(WT, EW * 5, EW * 5, $fn = 14);
         }
     }
     
@@ -143,11 +140,11 @@ module cage_support(){
 if (support == 0){
     side_wall(0);
     side_wall(BW - WT);
-    //outer_wall();
+    outer_wall();
     inner_wall();
     roller();
     cage();
-//} else {
+} else {
     difference(){
         union(){
             side_wall_support();
