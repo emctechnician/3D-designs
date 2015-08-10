@@ -1,12 +1,32 @@
 /*
 This is for generating designs for roller bearings.
+Printed with a soluble support material. I used HIPS and ABS.
+
 You must manually state the number of roller (NR), i'd suggest
 as many rollers you can fit. This changes depending on the size
 of bearing.
 
-The outer diameter minus the inner diameter must not be less
-than 20.4, this can be smaller if you drop the roller size, 
-however results may vary.
+Outer diameter less inner diameter must be greater than 20.4
+(this is limited by the roller size) 
+
+Instructions to print:
+Set the modifiable variables with printer settings, bearing size, number of rollers.
+Export soluble support STL with variable set to 1 (yes) and bearing STL with variable set to 0 (no).
+Using slic3r load the bearing STL and soluble support STL.
+Set the follwing part settings for each STL.
+    
+    For soluble support:
+        -Extruder                       soluble material (HIPS)
+        -Top solid layers               1
+        -Solid bottom layers            0
+        -Perimeters                     0
+        -Solid infill threashold area   1mm^2 
+    
+    For bearing:
+        -Extruder                       solid material (ABS)
+        -Top solid layers               3
+        -Solid bottom layers            3
+        -Perimeters                     5
 */
 
 //start of modifiable variables
@@ -14,11 +34,9 @@ support =   1;          //Generate soluble support 1 = yes, 0 = no
 BW      =   10;         //Bearing width Z axis
 EW      =   0.3;        //extrusion width
 LH      =   0.2;        //layer height
-ID      =   8.1;        //inner diameter
+ID      =   8.6;        //inner diameter
 OD      =   31;         //outer diameter
 NR      =   7;          //Number of rollers
-
-
 //end of modifiable variables
 
 {
@@ -85,7 +103,7 @@ module roller(){
             translate([0,0,RH / 2 - WT + LH])
             difference(){       //cage cutout on roller
                 cylinder(WT + LH * 4, RR, RR, $fn = 30);
-                cylinder(WT + LH * 4, EW * 4, EW * 4, $fn = 14);
+                cylinder(WT + LH * 4, EW * 5, EW * 5, $fn = 14);
             }
         }
     }
@@ -101,7 +119,7 @@ module roller_support(){
         translate([RPR,0,RH / 2 + LH * 3])
         difference(){       //cage cutout on roller
             cylinder(WT + LH * 4, RR, RR, $fn = 30);
-            cylinder(WT + LH * 4, EW * 4, EW * 4, $fn = 14);
+            cylinder(WT + LH * 4, EW * 5, EW * 5, $fn = 14);
         }
     }
         
@@ -110,12 +128,12 @@ module roller_support(){
 module cage(){
     translate([0,0,WT + RH / 2 - LH])
     difference(){
-        cylinder(WT, RPR + EW * 7, RPR + EW * 7);
-        cylinder(WT, RPR - EW * 7, RPR - EW * 7);
+        cylinder(WT, RPR + EW * 8, RPR + EW * 8);
+        cylinder(WT, RPR - EW * 8, RPR - EW * 8);
         for (i = [0:360 / NR:360]){
             rotate([0, 0, i])
             translate([RPR, 0, 0])
-            cylinder(WT, EW * 5, EW * 5, $fn = 14);
+            cylinder(WT, EW * 6, EW * 6, $fn = 14);
         }
     }
     
@@ -124,12 +142,12 @@ module cage(){
 module cage_support(){
     translate([0,0,0])
     difference(){
-        cylinder(WT + RH / 2 - LH, RPR + EW * 7, RPR + EW * 7);
-        cylinder(WT + RH / 2 - LH, RPR - EW * 7, RPR - EW * 7);
+        cylinder(WT + RH / 2 - LH, RPR + RR - WW, RPR + RR - WW);
+        cylinder(WT + RH / 2 - LH, RPR - RR + WW, RPR - RR + WW);
         for (i = [0:360 / NR:360]){
             rotate([0, 0, i])
             translate([RPR, 0, 0])
-            cylinder(WT, EW * 5, EW * 5, $fn = 14);
+            cylinder(WT, EW * 6, EW * 6, $fn = 14);
         }
     }
     
