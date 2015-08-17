@@ -31,11 +31,11 @@ Set the follwing part settings for each STL.
 
 //start of modifiable variables
 support =   1;          //Generate soluble support 1 = yes, 0 = no  
+EW      =   0.3;        //Extrusion width
+LH      =   0.2;        //Layer height
+ID      =   8.6;        //Inner diameter
+OD      =   31;         //Outer diameter
 BW      =   10;         //Bearing width Z axis
-EW      =   0.3;        //extrusion width
-LH      =   0.2;        //layer height
-ID      =   8.6;        //inner diameter
-OD      =   31;         //outer diameter
 NR      =   7;          //Number of rollers
 //end of modifiable variables
 

@@ -2,11 +2,11 @@ LH      =   0.248;  //layer height
 EW      =   0.4;    //extrusion width
 NW      =   6.3;    //nut width
 NH      =   3;    //nut height
-BCW     =   11;     //bearing cutout width y
+BCW     =   9;     //bearing cutout width y
 BSR     =   2.7;     //bearing shaft radius
-BCL     =   13.5;     //bearing cutout length X
-height  =   BSR * 2 + 8 * LH;     //z
-width   =   BCW + 8 * EW;     //y
+BCL     =   15;     //bearing cutout length X
+height  =   BSR * 2 + 10 * LH;     //z
+width   =   BCW + 12 * EW;     //y
 length  =   22;     //x
 
 echo ("total height = ",  height, "mm width = ", width,"mm"); 
